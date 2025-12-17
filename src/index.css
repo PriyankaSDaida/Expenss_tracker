@@ -1,11 +1,58 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
 :root {
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --primary: #8b5cf6;
-  --secondary: #64748b;
-  --accent: #22d3ee;
+  /* Neon Pencil Theme Colors */
+  --paper: #fdfbf7;
+  /* Keep warm paper background */
+  --paper-line: #e5e7eb;
+
+  /* NEON TEXT PALETTE */
+  --graphite: #1f2937;
+  /* Darker for contrast */
+
+  /* Neon Highlighters */
+  --neon-pink: #ff00ff;
+  --neon-cyan: #00ffff;
+  --neon-lime: #ccff00;
+  /* Bright Lime */
+  --neon-orange: #ff9900;
+  --neon-purple: #d946ef;
+
+  /* Functional mappings */
+  --primary: var(--neon-cyan);
+  --secondary: var(--neon-purple);
+  --accent: var(--neon-pink);
+
+  --ink-blue: var(--neon-cyan);
+  --teacher-red: #ff3333;
+  /* Brighter red */
+
+  --background: var(--paper);
+  --foreground: var(--graphite);
+}
+
+.dark {
+  /* Premium Neon Midnight Theme */
+  --paper: #09090b;
+  /* Deep Void Black */
+  --paper-line: #27272a;
+  /* Subtle dark grid */
+  --graphite: #f3f4f6;
+  /* Bright White Text */
+
+  /* Vibrant Glowing Neons */
+  --neon-pink: #f0abfc;
+  --neon-cyan: #67e8f9;
+  --neon-lime: #bef264;
+  --neon-orange: #fdba74;
+  --neon-purple: #d8b4fe;
+
+  --teacher-red: #f87171;
+
+  --background: var(--paper);
+  --foreground: var(--graphite);
 }
 
 @theme {
@@ -14,27 +61,156 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
+  --color-paper: var(--paper);
+  --color-graphite: var(--graphite);
 
-  --font-sans: 'Inter', sans-serif;
+  --color-neon-pink: var(--neon-pink);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-lime: var(--neon-lime);
+  --color-neon-orange: var(--neon-orange);
+  --color-teacher-red: var(--teacher-red);
+
+  --font-sans: 'Patrick Hand', cursive, sans-serif;
+
+  --animate-scribble: scribble 0.5s ease-in-out infinite;
+
+  @keyframes scribble {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    25% {
+      transform: rotate(1deg);
+    }
+
+    50% {
+      transform: rotate(-1deg);
+    }
+
+    75% {
+      transform: rotate(0.5deg);
+    }
+
+    100% {
+      transform: rotate(0deg);
+    }
+  }
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  background-image:
+    linear-gradient(#e5e7eb 1px, transparent 1px),
+    linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+  background-size: 20px 20px;
+  /* Grid paper effect */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.glass {
-  background: rgba(30, 41, 59, 0.5);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.dark body {
+  background-color: #020617;
+  background-image: radial-gradient(circle at center, #172554 0%, #020617 100%);
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
-.glass-card {
-  background: rgba(30, 41, 59, 0.5);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  @apply rounded-2xl shadow-xl transition-all duration-300 hover:bg-slate-800/50;
+/* Base Sketchy Utilities */
+.sketch-border {
+  border: 2px solid var(--graphite);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.sketch-border:hover {
+  box-shadow: 3px 4px 0px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.paper-card {
+  background-color: white;
+  border: 2px solid var(--graphite);
+  border-radius: 2px 255px 3px 25px / 255px 5px 225px 255px;
+  padding: 1.5rem;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.dark .paper-card {
+  box-shadow: 0 0 15px rgba(103, 232, 249, 0.1), 0 0 5px rgba(216, 180, 254, 0.1);
+  /* Neon glow */
+  border-color: #3f3f46;
+}
+
+.dark .paper-card:hover {
+  box-shadow: 0 0 20px rgba(103, 232, 249, 0.2), 0 0 10px rgba(216, 180, 254, 0.2);
+  border-color: var(--neon-cyan);
+}
+
+.paper-card::before {
+  /* Tape effect (optional, strictly keeping it simple for now) */
+  content: '';
+}
+
+.sketch-input {
+  background: transparent;
+  border-bottom: 2px solid var(--graphite, #374151);
+  border-radius: 0;
+  padding: 0.5rem;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.sketch-input:focus {
+  border-bottom-color: var(--primary);
+  border-bottom-width: 3px;
+}
+
+.sketch-btn {
+  background: var(--background);
+  border: 2px solid var(--graphite);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  padding: 0.5rem 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--graphite);
+  transition: all 0.1s;
+}
+
+.sketch-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--graphite);
+}
+
+.sketch-btn.primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 3px 3px 0 var(--graphite);
+}
+
+.sketch-btn.primary:hover {
+  background: #1d4ed8;
+}
+
+/* Scrollbar customization for a cleaner look */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--graphite-light);
+  border-radius: 5px;
+  border: 2px solid var(--paper);
 }

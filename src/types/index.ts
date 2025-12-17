@@ -27,4 +27,6 @@ export interface ExpenseState {
     balance: number;
     totalIncome: number;
     totalExpense: number;
+    isAddModalOpen: boolean;
+    setIsAddModalOpen: (isOpen: boolean) => void;
 }

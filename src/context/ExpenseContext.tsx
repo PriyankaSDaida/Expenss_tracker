@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { type Transaction, type ExpenseState } from '../types';
@@ -7,6 +7,7 @@ const ExpenseContext = createContext<ExpenseState | undefined>(undefined);
 
 export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [transactions, setTransactions] = useLocalStorage<Transaction[]>('transactions', []);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
         const newTransaction = { ...transaction, id: uuidv4() };
@@ -43,6 +44,8 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 balance,
                 totalIncome,
                 totalExpense,
+                isAddModalOpen,
+                setIsAddModalOpen,
             }}
         >
             {children}

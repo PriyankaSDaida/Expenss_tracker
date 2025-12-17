@@ -8,18 +8,18 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: "bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/25",
-                destructive: "bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-500/25",
-                outline: "border border-slate-700 hover:bg-slate-800 text-slate-200",
-                ghost: "hover:bg-slate-800 text-slate-200",
+                default: "bg-primary text-white border-2 border-slate-700 sketch-btn shadow-[3px_3px_0px_#374151] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_#374151] active:translate-y-[3px] active:shadow-none",
+                destructive: "bg-red-500 text-white border-2 border-slate-700 sketch-btn shadow-[3px_3px_0px_#374151] hover:bg-red-600",
+                outline: "bg-transparent border-2 border-slate-700 text-slate-700 sketch-btn shadow-[3px_3px_0px_#374151]",
+                ghost: "hover:bg-slate-100 text-slate-700",
                 link: "underline-offset-4 hover:underline text-primary",
-                glass: "bg-white/10 hover:bg-white/20 text-white border border-white/10 backdrop-blur-md",
+                glass: "bg-white/50 text-slate-800 border-2 border-slate-700 sketch-btn",
             },
             size: {
-                default: "h-10 py-2 px-4",
-                sm: "h-9 px-3 rounded-md",
-                lg: "h-11 px-8 rounded-md",
-                icon: "h-10 w-10",
+                default: "h-11 py-2 px-6",
+                sm: "h-9 px-4 rounded-md",
+                lg: "h-12 px-8 rounded-md",
+                icon: "h-11 w-11",
             },
         },
         defaultVariants: {

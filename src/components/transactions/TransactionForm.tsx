@@ -44,23 +44,23 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
         <motion.form
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-4"
+            className="space-y-4 font-[Patrick_Hand]"
             onSubmit={handleSubmit}
         >
             <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-400">Type</label>
-                    <div className="flex bg-slate-900/50 p-1 rounded-lg border border-slate-700">
+                    <label className="text-lg font-bold text-graphite">Type</label>
+                    <div className="flex bg-transparent p-1 gap-2">
                         {(['expense', 'income'] as const).map((t) => (
                             <button
                                 key={t}
                                 type="button"
                                 onClick={() => setType(t)}
                                 className={cn(
-                                    "flex-1 py-1.5 text-sm font-medium rounded-md transition-all capitalize",
+                                    "flex-1 py-1.5 text-lg font-bold border-b-2 transition-all capitalize",
                                     type === t
-                                        ? t === 'income' ? "bg-emerald-500/20 text-emerald-400" : "bg-red-500/20 text-red-400"
-                                        : "text-slate-400 hover:text-slate-200"
+                                        ? t === 'income' ? "border-neon-cyan text-neon-cyan" : "border-neon-orange text-neon-orange"
+                                        : "border-transparent text-gray-400 hover:text-gray-600"
                                 )}
                             >
                                 {t}
@@ -69,7 +69,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
                     </div>
                 </div>
                 <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-400">Amount</label>
+                    <label className="text-lg font-bold text-graphite">Amount</label>
                     <Input
                         type="number"
                         placeholder="0.00"
@@ -77,49 +77,51 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
                         onChange={(e) => setAmount(e.target.value)}
                         step="0.01"
                         required
-                        className="font-mono"
+                        className="font-[Patrick_Hand] text-xl"
                     />
                 </div>
             </div>
 
             <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-400">Description</label>
+                <label className="text-lg font-bold text-graphite">Description</label>
                 <Input
                     placeholder="What is this for?"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
+                    className="text-lg"
                 />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-400">Category</label>
+                    <label className="text-lg font-bold text-graphite">Category</label>
                     <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value as Category)}
-                        className="flex h-10 w-full rounded-lg border border-slate-700 bg-slate-900/50 px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+                        className="sketch-input w-full text-lg cursor-pointer bg-transparent"
                     >
                         {categories.map((c) => (
-                            <option key={c} value={c} className="bg-slate-900">
+                            <option key={c} value={c} className="bg-white text-graphite">
                                 {c}
                             </option>
                         ))}
                     </select>
                 </div>
                 <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-400">Date</label>
+                    <label className="text-lg font-bold text-graphite">Date</label>
                     <Input
                         type="date"
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
                         required
+                        className="text-lg"
                     />
                 </div>
             </div>
 
-            <Button type="submit" className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90">
-                <Plus className="w-4 h-4 mr-2" /> Add Transaction
+            <Button type="submit" className="w-full mt-4 text-xl">
+                <Plus className="w-5 h-5 mr-2" /> Add to List
             </Button>
         </motion.form>
     );

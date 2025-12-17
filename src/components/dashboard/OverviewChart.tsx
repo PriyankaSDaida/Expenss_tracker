@@ -1,11 +1,19 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 import { useExpense } from '../../context/ExpenseContext';
+import { useTheme } from '../../context/ThemeContext';
 import { Card } from '../ui/Card';
 import { format, parseISO, subDays } from 'date-fns';
 
 export const OverviewChart = () => {
     const { transactions } = useExpense();
+    const { theme } = useTheme(); // Added useTheme hook
+
+    const isDark = theme === 'dark'; // Added theme-dependent variables
+    const textColor = isDark ? '#f3f4f6' : '#374151';
+    const gridColor = isDark ? '#333' : '#e5e7eb';
+    const tooltipBg = isDark ? '#09090b' : '#fff';
+    const tooltipBorder = isDark ? '#22d3ee' : '#374151';
 
     const data = useMemo(() => {
         // Get last 7 days
@@ -28,32 +36,38 @@ export const OverviewChart = () => {
     }, [transactions]);
 
     return (
-        <Card className="h-[300px]">
-            <h3 className="text-lg font-semibold mb-4 text-slate-200">Weekly Overview</h3>
+        <Card className="h-[300px] paper-card">
+            <h3 className="text-lg font-bold mb-4 text-graphite font-[Patrick_Hand] dark:text-white">Weekly Overview</h3>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
                     <XAxis
                         dataKey="date"
-                        stroke="#94a3b8"
-                        tick={{ fill: '#94a3b8', fontSize: 12 }}
+                        stroke={textColor}
+                        tick={{ fill: textColor, fontSize: 14, fontFamily: 'Patrick Hand' }}
                         tickLine={false}
                         axisLine={false}
                     />
                     <YAxis
-                        stroke="#94a3b8"
-                        tick={{ fill: '#94a3b8', fontSize: 12 }}
+                        stroke={textColor}
+                        tick={{ fill: textColor, fontSize: 12, fontFamily: 'Patrick Hand' }}
                         tickLine={false}
                         axisLine={false}
                     />
                     <Tooltip
-                        cursor={{ fill: '#334155', opacity: 0.2 }}
-                        contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px' }}
-                        itemStyle={{ color: '#f8fafc' }}
+                        cursor={{ fill: textColor, opacity: 0.1 }}
+                        contentStyle={{
+                            backgroundColor: tooltipBg,
+                            border: `2px solid ${tooltipBorder}`,
+                            borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
+                            boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+                            color: textColor
+                        }}
+                        itemStyle={{ color: textColor, fontFamily: 'Patrick Hand', fontSize: '1.1rem' }}
                     />
-                    <Legend />
-                    <Bar dataKey="Income" fill="#34d399" radius={[4, 4, 0, 0]} maxBarSize={40} />
-                    <Bar dataKey="Expense" fill="#f87171" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                    <Legend wrapperStyle={{ fontFamily: 'Patrick Hand', color: textColor }} />
+                    <Bar dataKey="Income" fill={isDark ? "#22d3ee" : "#00ffff"} radius={[4, 4, 0, 0]} maxBarSize={40} />
+                    <Bar dataKey="Expense" fill={isDark ? "#fb923c" : "#ff9900"} radius={[4, 4, 0, 0]} maxBarSize={40} />
                 </BarChart>
             </ResponsiveContainer>
         </Card>
