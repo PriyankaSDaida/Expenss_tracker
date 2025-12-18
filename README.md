@@ -54,16 +54,14 @@ A modern, visually stunning personal finance application built with React, TypeS
 
 ## 🏗 Architecture
 
-The application follows a component-based architecture using React's Context API for global state management.
+The application is built on a robust, component-driven architecture powered by React 19's Context API. We prioritize simplicity and performance, using a "provider pattern" to share state efficiently without prop drilling.
 
-### Data Flow
+### Data Flow Strategy
 
-1.  **Context Layer**: `ExpenseProvider` and `ThemeProvider` wrap the application, providing global access to transaction data and theme state.
-2.  **Custom Hooks**:
-    -   `useExpense()`: Accesses and modifies transaction data.
-    -   `useTheme()`: Toggles between Light and Dark modes.
-    -   `useLocalStorage()`: Handles data persistence to the browser.
-3.  **Components**: Functional components consume these hooks to display data (Dashboard) or trigger updates (TransactionForm).
+1.  **Global Trust Source**: The `ExpenseProvider` acts as the single source of truth, managing transaction history, calculating live balances, and handling data persistence via `localStorage`.
+2.  **Smart Hooks**: Custom hooks like `useExpense()` provide components with direct, type-safe access to global state.
+3.  **Persisted State**: The `useLocalStorage` hook ensures data survives browser refreshes by syncing state changes to the browser's storage.
+4.  **Utility Logic**: Complex operations, such as generating monthly PDF reports, are offloaded to dedicated utility functions (`pdfGenerator.ts`) to keep the UI lean and responsive.
 
 ### System Component Diagram
 
@@ -83,11 +81,16 @@ graph TD
         LocalStore[LocalStorage Hook]
     end
     
-    subgraph "UI Components"
+    subgraph "Utilities"
+        PDFGen[PDF Generator]
+    end
+    
+    subgraph "UI Dashboard"
         Dashboard[Dashboard View]
         TxForm[Transaction Form]
         summary[Summary Cards]
-        Charts[Charts Component]
+        Overview[Overview Chart]
+        Category[Category Chart]
     end
     
     Client --> App
@@ -100,20 +103,26 @@ graph TD
     Router --> Dashboard
     
     Dashboard --> summary
-    Dashboard --> Charts
+    Dashboard --> Overview
+    Dashboard --> Category
     Dashboard --> TxForm
+    Dashboard -.->|Triggers| PDFGen
     
+    PDFGen -.->|Reads Data| ExpenseCtx
     summary -.->|Reads Data| ExpenseCtx
-    Charts -.->|Reads Data| ExpenseCtx
+    Overview -.->|Reads Data| ExpenseCtx
+    Category -.->|Reads Data| ExpenseCtx
     TxForm -.->|Updates Data| ExpenseCtx
     
     classDef core fill:#1e293b,stroke:#a5b4fc,color:#fff;
     classDef state fill:#312e81,stroke:#6366f1,color:#fff;
     classDef ui fill:#0f172a,stroke:#38bdf8,color:#fff;
+    classDef util fill:#047857,stroke:#34d399,color:#fff;
     
     class App,Providers,Router core;
     class ExpenseCtx,ThemeCtx,LocalStore state;
-    class Dashboard,TxForm,summary,Charts ui;
+    class Dashboard,TxForm,summary,Overview,Category ui;
+    class PDFGen util;
 ```
 
 ## 📂 Project Structure
@@ -129,6 +138,8 @@ src/
 │   └── ThemeContext.tsx
 ├── hooks/               # Custom hooks
 │   └── useLocalStorage.ts
+├── utils/               # Helper functions
+│   └── pdfGenerator.ts
 ├── types/               # TypeScript interfaces and types
 │   └── index.ts
 ├── App.tsx              # Main application component
