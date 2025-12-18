@@ -5,6 +5,11 @@ import { Card } from '../ui/Card';
 export const SummaryCards = () => {
     const { balance, totalIncome, totalExpense, setIsAddModalOpen, setInitialTransactionType } = useExpense();
 
+    const handleAddIncome = () => {
+        setInitialTransactionType('income');
+        setIsAddModalOpen(true);
+    };
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card className="relative overflow-hidden group hover:rotate-1 transition-transform duration-300 border-neon-cyan border-2">
@@ -28,10 +33,7 @@ export const SummaryCards = () => {
                     <div className="flex justify-between items-start">
                         <p className="text-xl font-bold text-gray-400 font-[Patrick_Hand] dark:text-gray-300">Total Income</p>
                         <button
-                            onClick={() => {
-                                setInitialTransactionType('income');
-                                setIsAddModalOpen(true);
-                            }}
+                            onClick={handleAddIncome}
                             className="p-1 rounded-full hover:bg-neon-lime/20 text-neon-lime transition-colors"
                             title="Add Income"
                         >

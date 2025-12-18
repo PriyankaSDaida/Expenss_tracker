@@ -55,23 +55,23 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
             className="space-y-4 font-[Patrick_Hand]"
             onSubmit={handleSubmit}
         >
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                     <label className="text-lg font-bold text-graphite">Type</label>
                     <div className="flex bg-transparent p-1 gap-2">
-                        {(['expense', 'income'] as const).map((t) => (
+                        {(['expense', 'income'] as const).map((transactionType) => (
                             <button
-                                key={t}
+                                key={transactionType}
                                 type="button"
-                                onClick={() => setType(t)}
+                                onClick={() => setType(transactionType)}
                                 className={cn(
                                     "flex-1 py-1.5 text-lg font-bold border-b-2 transition-all capitalize",
-                                    type === t
-                                        ? t === 'income' ? "border-neon-cyan text-neon-cyan" : "border-neon-orange text-neon-orange"
+                                    type === transactionType
+                                        ? transactionType === 'income' ? "border-neon-cyan text-neon-cyan" : "border-neon-orange text-neon-orange"
                                         : "border-transparent text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-200"
                                 )}
                             >
-                                {t}
+                                {transactionType}
                             </button>
                         ))}
                     </div>
@@ -101,7 +101,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
                 />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                     <label className="text-lg font-bold text-graphite">Category</label>
                     <select
@@ -109,9 +109,9 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
                         onChange={(e) => setCategory(e.target.value as Category)}
                         className="sketch-input w-full text-lg cursor-pointer bg-transparent"
                     >
-                        {categories.map((c) => (
-                            <option key={c} value={c} className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
-                                {c}
+                        {categories.map((categoryOption) => (
+                            <option key={categoryOption} value={categoryOption} className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
+                                {categoryOption}
                             </option>
                         ))}
                     </select>
@@ -129,6 +129,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
             </div>
 
             <div className="flex gap-4 mt-4">
+                {/* Reset button clears the form to default state */}
                 <Button type="button" variant="ghost" onClick={handleReset} className="flex-1 text-xl border-2 border-dashed border-gray-300 hover:border-gray-400 text-gray-500 dark:text-gray-300 dark:border-gray-500 dark:hover:border-gray-300">
                     Reset
                 </Button>

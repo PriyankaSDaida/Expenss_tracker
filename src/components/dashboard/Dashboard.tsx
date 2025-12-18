@@ -15,6 +15,17 @@ export const Dashboard = () => {
     const { isAddModalOpen, setIsAddModalOpen, setInitialTransactionType, resetAllData, transactions } = useExpense();
     const { theme, toggleTheme } = useTheme();
 
+    const handleGlobalReset = () => {
+        if (window.confirm('Are you sure you want to reset all data? This cannot be undone.')) {
+            resetAllData();
+        }
+    };
+
+    const handleOpenAddTransactionModal = () => {
+        setInitialTransactionType('expense');
+        setIsAddModalOpen(true);
+    };
+
     return (
         <div className="space-y-6 max-w-7xl mx-auto px-4 py-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
@@ -39,11 +50,7 @@ export const Dashboard = () => {
                     </Button>
                     <Button
                         variant="outline"
-                        onClick={() => {
-                            if (window.confirm('Are you sure you want to reset all data? This cannot be undone.')) {
-                                resetAllData();
-                            }
-                        }}
+                        onClick={handleGlobalReset}
                         size="icon"
                         className="rounded-full border-neon-orange text-neon-orange hover:bg-neon-orange/10 dark:text-neon-orange dark:border-neon-orange bg-transparent"
                         title="Reset Dashboard"
@@ -52,10 +59,7 @@ export const Dashboard = () => {
                     </Button>
                     <Button
                         variant="outline"
-                        onClick={() => {
-                            setInitialTransactionType('expense');
-                            setIsAddModalOpen(true);
-                        }}
+                        onClick={handleOpenAddTransactionModal}
                         className="gap-2 border-neon-cyan text-neon-cyan hover:bg-neon-cyan/10 bg-transparent"
                     >
                         <Plus size={18} style={{ minWidth: 18, minHeight: 18 }} /> Add Transaction
