@@ -16,10 +16,10 @@ export const CategoryChart = () => {
     const tooltipBorder = isDark ? '#22d3ee' : '#374151';
 
     const data = useMemo(() => {
-        const expenses = transactions.filter(t => t.type === 'expense');
-        const categoryTotals = expenses.reduce((acc, curr) => {
-            acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
-            return acc;
+        const expenses = transactions.filter(transaction => transaction.type === 'expense');
+        const categoryTotals = expenses.reduce((totals, transaction) => {
+            totals[transaction.category] = (totals[transaction.category] || 0) + transaction.amount;
+            return totals;
         }, {} as Record<string, number>);
 
         return Object.entries(categoryTotals).map(([name, value]) => ({

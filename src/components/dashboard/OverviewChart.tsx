@@ -23,9 +23,14 @@ export const OverviewChart = () => {
         });
 
         return last7Days.map(date => {
-            const dayTransactions = transactions.filter(t => t.date === date);
-            const income = dayTransactions.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.amount, 0);
-            const expense = dayTransactions.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.amount, 0);
+            const dayTransactions = transactions.filter(transaction => transaction.date === date);
+            const income = dayTransactions
+                .filter(transaction => transaction.type === 'income')
+                .reduce((sum, transaction) => sum + transaction.amount, 0);
+
+            const expense = dayTransactions
+                .filter(transaction => transaction.type === 'expense')
+                .reduce((sum, transaction) => sum + transaction.amount, 0);
 
             return {
                 date: format(parseISO(date), 'MMM dd'),

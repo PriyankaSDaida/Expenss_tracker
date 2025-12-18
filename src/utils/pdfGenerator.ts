@@ -14,10 +14,10 @@ export const generateMonthlyReport = (transactions: Transaction[]) => {
     doc.text(`Expense Report - ${currentMonth}`, 14, 22);
 
     // Filter transactions for current month
-    const currentMonthTransactions = transactions.filter(t => {
-        const tDate = new Date(t.date);
+    const currentMonthTransactions = transactions.filter(transaction => {
+        const transactionDate = new Date(transaction.date);
         const now = new Date();
-        return tDate.getMonth() === now.getMonth() && tDate.getFullYear() === now.getFullYear();
+        return transactionDate.getMonth() === now.getMonth() && transactionDate.getFullYear() === now.getFullYear();
     });
 
     if (currentMonthTransactions.length === 0) {
@@ -30,12 +30,12 @@ export const generateMonthlyReport = (transactions: Transaction[]) => {
 
     // Calculate totals
     const income = currentMonthTransactions
-        .filter(t => t.type === 'income')
-        .reduce((sum, t) => sum + t.amount, 0);
+        .filter(transaction => transaction.type === 'income')
+        .reduce((sum, transaction) => sum + transaction.amount, 0);
 
     const expense = currentMonthTransactions
-        .filter(t => t.type === 'expense')
-        .reduce((sum, t) => sum + t.amount, 0);
+        .filter(transaction => transaction.type === 'expense')
+        .reduce((sum, transaction) => sum + transaction.amount, 0);
 
     const balance = income - expense;
 
@@ -47,12 +47,12 @@ export const generateMonthlyReport = (transactions: Transaction[]) => {
     doc.text(`Net Balance: $${balance.toFixed(2)}`, 14, 44);
 
     // Table Data
-    const tableData = currentMonthTransactions.map(t => [
-        format(new Date(t.date), 'MMM dd, yyyy'),
-        t.description,
-        t.category,
-        t.type.toUpperCase(),
-        `$${t.amount.toFixed(2)}`
+    const tableData = currentMonthTransactions.map(transaction => [
+        format(new Date(transaction.date), 'MMM dd, yyyy'),
+        transaction.description,
+        transaction.category,
+        transaction.type.toUpperCase(),
+        `$${transaction.amount.toFixed(2)}`
     ]);
 
     // Generate Table

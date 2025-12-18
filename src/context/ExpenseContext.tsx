@@ -16,7 +16,7 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({ child
     };
 
     const deleteTransaction = (id: string) => {
-        setTransactions((prev) => prev.filter((t) => t.id !== id));
+        setTransactions((prev) => prev.filter((transaction) => transaction.id !== id));
     };
 
     const resetAllData = () => {
@@ -25,16 +25,16 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     const { balance, totalIncome, totalExpense } = useMemo(() => {
         return transactions.reduce(
-            (acc, curr) => {
-                const amount = curr.amount;
-                if (curr.type === 'income') {
-                    acc.totalIncome += amount;
-                    acc.balance += amount;
+            (totals, transaction) => {
+                const amount = transaction.amount;
+                if (transaction.type === 'income') {
+                    totals.totalIncome += amount;
+                    totals.balance += amount;
                 } else {
-                    acc.totalExpense += amount;
-                    acc.balance -= amount;
+                    totals.totalExpense += amount;
+                    totals.balance -= amount;
                 }
-                return acc;
+                return totals;
             },
             { balance: 0, totalIncome: 0, totalExpense: 0 }
         );
