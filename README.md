@@ -5,8 +5,10 @@ A modern, visually stunning personal finance application built with React, TypeS
 ## 🌟 Features
 
 -   **Dashboard Overview**: Visualize your financial health with interactive bar and pie charts.
--   **Transaction Management**: Add, view, and delete transactions with ease.
--   **Premium Dark Mode**: "Deep Midnight" radial gradient background with glowing neon accents.
+-   **Transaction Management**: Add (Income/Expense), view, and delete transactions with ease.
+-   **PDF Export**: Download comprehensive monthly expense reports with a single click.
+-   **Global Reset**: Quickly reset your dashboard and clear all data for a fresh start.
+-   **Premium Dark Mode**: "Deep Midnight" radial gradient background with glowing neon accents and high-visibility text.
 -   **Light Mode**: "Pencil & Paper" aesthetic for a classic feel.
 -   **Data Persistence**: All data is saved locally in your browser using `localStorage`.
 -   **Responsive Design**: Fully responsive layout optimized for desktop and mobile.
@@ -18,6 +20,7 @@ A modern, visually stunning personal finance application built with React, TypeS
 -   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 -   **Icons**: [Lucide React](https://lucide.dev/)
 -   **Charts**: [Recharts](https://recharts.org/)
+-   **PDF Generation**: [jspdf](https://github.com/parallax/jsPDF) + [jspdf-autotable](https://github.com/simonbengtsson/jsPDF-AutoTable)
 -   **Animations**: [Framer Motion](https://www.framer.com/motion/)
 -   **Date Handling**: [date-fns](https://date-fns.org/)
 -   **State Management**: React Context API

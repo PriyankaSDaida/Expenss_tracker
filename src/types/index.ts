@@ -29,4 +29,7 @@ export interface ExpenseState {
     totalExpense: number;
     isAddModalOpen: boolean;
     setIsAddModalOpen: (isOpen: boolean) => void;
+    initialTransactionType: TransactionType;
+    setInitialTransactionType: (type: TransactionType) => void;
+    resetAllData: () => void;
 }

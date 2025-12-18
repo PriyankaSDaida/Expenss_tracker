@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Plus, X, Sun, Moon } from 'lucide-react';
+import { Plus, X, Sun, Moon, RotateCcw, Download } from 'lucide-react';
 import { useExpense } from '../../context/ExpenseContext';
 import { useTheme } from '../../context/ThemeContext';
+import { generateMonthlyReport } from '../../utils/pdfGenerator';
 import { SummaryCards } from './SummaryCards';
 import { OverviewChart } from './OverviewChart';
 import { CategoryChart } from './CategoryChart';
@@ -11,7 +12,7 @@ import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 
 export const Dashboard = () => {
-    const { isAddModalOpen, setIsAddModalOpen } = useExpense();
+    const { isAddModalOpen, setIsAddModalOpen, setInitialTransactionType, resetAllData, transactions } = useExpense();
     const { theme, toggleTheme } = useTheme();
 
     return (
@@ -21,14 +22,43 @@ export const Dashboard = () => {
                     <h1 className="text-5xl font-bold text-neon-pink font-[Patrick_Hand] drop-shadow-sm tracking-wide">
                         Dashboard
                     </h1>
-                    <p className="text-gray-500 text-lg font-bold dark:text-gray-400">Track your financial health</p>
+                    <p className="text-gray-500 text-lg font-bold dark:text-gray-300">Track your financial health</p>
                 </div>
                 <div className="flex gap-3">
-                    <Button onClick={toggleTheme} size="icon" className="rounded-full border-neon-purple text-neon-purple hover:bg-neon-purple/10">
-                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+                    <Button variant="outline" onClick={toggleTheme} size="icon" className="rounded-full border-neon-purple text-neon-purple hover:bg-neon-purple/10 dark:text-neon-purple dark:border-neon-purple bg-transparent">
+                        {theme === 'light' ? <Moon size={20} style={{ minWidth: 20, minHeight: 20 }} /> : <Sun size={20} style={{ minWidth: 20, minHeight: 20 }} />}
                     </Button>
-                    <Button onClick={() => setIsAddModalOpen(true)} className="gap-2 border-neon-cyan text-neon-cyan hover:bg-neon-cyan/10">
-                        <Plus size={18} /> Add Transaction
+                    <Button
+                        variant="outline"
+                        onClick={() => generateMonthlyReport(transactions)}
+                        size="icon"
+                        className="rounded-full border-neon-lime text-neon-lime hover:bg-neon-lime/10 dark:text-neon-lime dark:border-neon-lime bg-transparent"
+                        title="Download Monthly Report"
+                    >
+                        <Download size={20} style={{ minWidth: 20, minHeight: 20 }} />
+                    </Button>
+                    <Button
+                        variant="outline"
+                        onClick={() => {
+                            if (window.confirm('Are you sure you want to reset all data? This cannot be undone.')) {
+                                resetAllData();
+                            }
+                        }}
+                        size="icon"
+                        className="rounded-full border-neon-orange text-neon-orange hover:bg-neon-orange/10 dark:text-neon-orange dark:border-neon-orange bg-transparent"
+                        title="Reset Dashboard"
+                    >
+                        <RotateCcw size={20} style={{ minWidth: 20, minHeight: 20 }} />
+                    </Button>
+                    <Button
+                        variant="outline"
+                        onClick={() => {
+                            setInitialTransactionType('expense');
+                            setIsAddModalOpen(true);
+                        }}
+                        className="gap-2 border-neon-cyan text-neon-cyan hover:bg-neon-cyan/10 bg-transparent"
+                    >
+                        <Plus size={18} style={{ minWidth: 18, minHeight: 18 }} /> Add Transaction
                     </Button>
                 </div>
             </div>
@@ -50,9 +80,9 @@ export const Dashboard = () => {
                         <h3 className="text-2xl font-bold mb-2 text-neon-orange flex items-center gap-2">
                             Pro Tip!
                         </h3>
-                        <p className="text-gray-700 text-xl leading-relaxed font-[Patrick_Hand] dark:text-gray-300">
+                        <p className="text-gray-700 text-xl leading-relaxed font-[Patrick_Hand] dark:text-gray-200">
                             Review your "Food" expenses. They are <span className="text-teacher-red font-bold">15% higher</span> than last month.
-                            <span className="block mt-2 text-sm text-gray-500 font-sans italic">- Prof. Penny</span>
+                            <span className="block mt-2 text-sm text-gray-500 font-sans italic dark:text-gray-400">- Prof. Penny</span>
                         </p>
                     </div>
                 </div>
