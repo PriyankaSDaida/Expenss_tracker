@@ -17,8 +17,8 @@ export const Dashboard = () => {
 
     return (
         <div className="space-y-6 max-w-7xl mx-auto px-4 py-8">
-            <div className="flex justify-between items-center">
-                <div>
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
+                <div className="text-center md:text-left">
                     <h1 className="text-5xl font-bold text-neon-pink font-[Patrick_Hand] drop-shadow-sm tracking-wide">
                         Dashboard
                     </h1>

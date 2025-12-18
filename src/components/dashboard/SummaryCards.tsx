@@ -6,7 +6,7 @@ export const SummaryCards = () => {
     const { balance, totalIncome, totalExpense, setIsAddModalOpen, setInitialTransactionType } = useExpense();
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card className="relative overflow-hidden group hover:rotate-1 transition-transform duration-300 border-neon-cyan border-2">
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <Wallet size={100} className="text-neon-cyan" />
