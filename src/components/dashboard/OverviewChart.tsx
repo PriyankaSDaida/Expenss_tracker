@@ -36,8 +36,8 @@ export const OverviewChart = () => {
     }, [transactions]);
 
     return (
-        <Card className="h-[300px] paper-card">
-            <h3 className="text-lg font-bold mb-4 text-graphite font-[Patrick_Hand] dark:text-white">Weekly Overview</h3>
+        <Card className="p-6 h-96 relative paper-card border-neon-cyan border-2">
+            <h3 className="text-xl font-bold mb-4 font-[Patrick_Hand] text-gray-600 dark:text-neon-cyan">Weekly Overview</h3>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />

@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { type Transaction, type ExpenseState } from '../types';
+import { type Transaction, type ExpenseState, type TransactionType } from '../types';
 
 const ExpenseContext = createContext<ExpenseState | undefined>(undefined);
 
 export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [transactions, setTransactions] = useLocalStorage<Transaction[]>('transactions', []);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [initialTransactionType, setInitialTransactionType] = useState<TransactionType>('expense');
 
     const addTransaction = (transaction: Omit<Transaction, 'id'>) => {
         const newTransaction = { ...transaction, id: uuidv4() };
@@ -16,6 +17,10 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     const deleteTransaction = (id: string) => {
         setTransactions((prev) => prev.filter((t) => t.id !== id));
+    };
+
+    const resetAllData = () => {
+        setTransactions([]);
     };
 
     const { balance, totalIncome, totalExpense } = useMemo(() => {
@@ -46,6 +51,9 @@ export const ExpenseProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 totalExpense,
                 isAddModalOpen,
                 setIsAddModalOpen,
+                initialTransactionType,
+                setInitialTransactionType,
+                resetAllData,
             }}
         >
             {children}

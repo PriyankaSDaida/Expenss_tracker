@@ -11,7 +11,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             <input
                 type={type}
                 className={cn(
-                    "sketch-input w-full text-gray-800 placeholder:text-gray-400",
+                    "sketch-input w-full text-gray-800 dark:text-gray-100 placeholder:text-gray-400",
                     className
                 )}
                 ref={ref}

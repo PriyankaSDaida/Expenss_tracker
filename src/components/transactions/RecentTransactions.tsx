@@ -27,7 +27,7 @@ export const RecentTransactions = () => {
                                 </div>
                                 <div>
                                     <p className="font-bold text-graphite font-[Patrick_Hand] text-lg">{t.description}</p>
-                                    <p className="text-sm text-gray-500 font-[Patrick_Hand]">{format(new Date(t.date), 'MMM d, yyyy')} • {t.category}</p>
+                                    <p className="text-sm text-gray-500 font-[Patrick_Hand] dark:text-gray-400">{format(new Date(t.date), 'MMM d, yyyy')} • {t.category}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -37,7 +37,7 @@ export const RecentTransactions = () => {
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-teacher-red"
+                                    className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-teacher-red dark:text-gray-500 dark:hover:text-teacher-red"
                                     onClick={() => deleteTransaction(t.id)}
                                 >
                                     <Trash2 size={16} />

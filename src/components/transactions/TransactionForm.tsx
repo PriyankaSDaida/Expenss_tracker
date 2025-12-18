@@ -16,11 +16,11 @@ interface TransactionFormProps {
 }
 
 export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => {
-    const { addTransaction } = useExpense();
+    const { addTransaction, initialTransactionType } = useExpense();
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState<Category>('Food');
-    const [type, setType] = useState<TransactionType>('expense');
+    const [type, setType] = useState<TransactionType>(initialTransactionType);
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -38,6 +38,14 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
         setAmount('');
         setDescription('');
         if (onClose) onClose();
+    };
+
+    const handleReset = () => {
+        setAmount('');
+        setDescription('');
+        setCategory('Food');
+        setType(initialTransactionType);
+        setDate(new Date().toISOString().split('T')[0]);
     };
 
     return (
@@ -60,7 +68,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
                                     "flex-1 py-1.5 text-lg font-bold border-b-2 transition-all capitalize",
                                     type === t
                                         ? t === 'income' ? "border-neon-cyan text-neon-cyan" : "border-neon-orange text-neon-orange"
-                                        : "border-transparent text-gray-400 hover:text-gray-600"
+                                        : "border-transparent text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-200"
                                 )}
                             >
                                 {t}
@@ -102,7 +110,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
                         className="sketch-input w-full text-lg cursor-pointer bg-transparent"
                     >
                         {categories.map((c) => (
-                            <option key={c} value={c} className="bg-white text-graphite">
+                            <option key={c} value={c} className="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
                                 {c}
                             </option>
                         ))}
@@ -120,9 +128,14 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onClose }) => 
                 </div>
             </div>
 
-            <Button type="submit" className="w-full mt-4 text-xl">
-                <Plus className="w-5 h-5 mr-2" /> Add to List
-            </Button>
+            <div className="flex gap-4 mt-4">
+                <Button type="button" variant="ghost" onClick={handleReset} className="flex-1 text-xl border-2 border-dashed border-gray-300 hover:border-gray-400 text-gray-500 dark:text-gray-300 dark:border-gray-500 dark:hover:border-gray-300">
+                    Reset
+                </Button>
+                <Button type="submit" className="flex-[2] text-xl">
+                    <Plus className="w-5 h-5 mr-2" /> Add to List
+                </Button>
+            </div>
         </motion.form>
     );
 };

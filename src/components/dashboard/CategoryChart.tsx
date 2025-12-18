@@ -37,8 +37,8 @@ export const CategoryChart = () => {
     }
 
     return (
-        <Card className="h-[300px] paper-card">
-            <h3 className="text-lg font-bold mb-4 text-graphite font-[Patrick_Hand] dark:text-white">Expenses by Category</h3>
+        <Card className="p-6 h-96 relative paper-card border-neon-purple border-2">
+            <h3 className="text-xl font-bold mb-4 font-[Patrick_Hand] text-gray-600 dark:text-neon-purple">Expenses by Category</h3>
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie
